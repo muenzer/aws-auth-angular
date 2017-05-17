@@ -16,8 +16,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'bower_components/angular-mocks/angular-mocks.js',
-      'auth0-variables.js',
       'aws-auth-angular.js',
+      'aws-auth-angular.config.js',
       'spec/**/*.spec.js'
     ],
 

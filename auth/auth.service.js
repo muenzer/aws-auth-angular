@@ -5,8 +5,8 @@
   .module('aws-auth-angular')
   .service('authService', authService);
 
-  authService.$inject = ['lock', 'authManager', 'angularAuth0', 'jwtHelper', '$q', 'accountInfo', '$rootScope', '$state'];
-  function authService(lock, authManager, angularAuth0, jwtHelper, $q, accountInfo, $rootScope, $state) {
+  authService.$inject = ['lock', 'authManager', 'angularAuth0', 'jwtHelper', '$q', 'awsAuthAngularInfo', '$rootScope', '$state'];
+  function authService(lock, authManager, angularAuth0, jwtHelper, $q, awsAuthAngularInfo, $rootScope, $state) {
 
     function login() {
       lock.show();
@@ -71,7 +71,7 @@
           /* jshint -W106 */
           angularAuth0.getDelegationToken(
             {
-              client_id: accountInfo.AUTH0_CLIENT_ID,
+              client_id: awsAuthAngularInfo.AUTH0_CLIENT_ID,
               id_token: idToken,
               api_type: 'aws'
             }, function(err, result) {

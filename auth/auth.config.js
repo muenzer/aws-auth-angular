@@ -4,23 +4,18 @@
   angular.module('aws-auth-angular')
   .config(authConfig)
   .config(awsConfig)
-  .constant('accountInfo', {
-    AUTH0_CLIENT_ID: AUTH0_CLIENT_ID,
-    AUTH0_DOMAIN: AUTH0_DOMAIN,
-    AUTH0_CALLBACK_URL: AUTH0_CALLBACK_URL
-  })
   .run(authServiceConfig);
 
-  authConfig.$inject = ['lockProvider', 'angularAuth0Provider', 'accountInfo'];
-  function authConfig(lockProvider, angularAuth0Provider, accountInfo) {
+  authConfig.$inject = ['lockProvider', 'angularAuth0Provider', 'awsAuthAngularInfo'];
+  function authConfig(lockProvider, angularAuth0Provider, awsAuthAngularInfo) {
     var options = {auth: { redirect: false }};
     lockProvider.init({
-      clientID: accountInfo.AUTH0_CLIENT_ID,
-      domain: accountInfo.AUTH0_DOMAIN,
+      clientID: awsAuthAngularInfo.AUTH0_CLIENT_ID,
+      domain: awsAuthAngularInfo.AUTH0_DOMAIN,
       options: {
         auth: {
           params: {
-            callbackURL: accountInfo.AUTH0_CALLBACK_URL,
+            callbackURL: awsAuthAngularInfo.AUTH0_CALLBACK_URL,
             respone: 'token'
           }
         }
@@ -28,18 +23,18 @@
     });
 
     angularAuth0Provider.init({
-      clientID: accountInfo.AUTH0_CLIENT_ID,
-      domain: accountInfo.AUTH0_DOMAIN
+      clientID: awsAuthAngularInfo.AUTH0_CLIENT_ID,
+      domain: awsAuthAngularInfo.AUTH0_DOMAIN
     });
   }
 
-  awsConfig.$inject = ['$httpProvider', 'APIGInterceptorProvider'];
-  function awsConfig($httpProvider, APIGInterceptorProvider) {
+  awsConfig.$inject = ['$httpProvider', 'APIGInterceptorProvider', 'awsAuthAngularInfo'];
+  function awsConfig($httpProvider, APIGInterceptorProvider, awsAuthAngularInfo) {
     APIGInterceptorProvider.config({
       headers: {},
-      region: 'eu-central-1',
-      service: 'execute-api',
-      urlRegex: 'amazonaws.com/.*/admin'
+      region: awsAuthAngularInfo.AWS_REGION,
+      service: awsAuthAngularInfo.AWS_SERVICE,
+      urlRegex: awsAuthAngularInfo.AWS_URLREGEX
     });
 
     credentialsGetter.$inject = ['authService'];
