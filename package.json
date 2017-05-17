@@ -1,0 +1,24 @@
+{
+  "name": "aws-auth-angular",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-bower-concat": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "jasmine": "^2.5.3",
+    "jasmine-core": "^2.6.1",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.1.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "load-grunt-tasks": "^3.5.2"
+  },
+  "scripts": {
+    "test": "karma start"
+  },
+  "author": "muenzer",
+  "license": "ISC"
+}
