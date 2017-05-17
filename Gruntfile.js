@@ -18,14 +18,13 @@ module.exports = function (grunt) {
     },
     concat: {
       dist: {
-        src: ['build/_bower.js', 'auth/auth.module.js', 'auth/*.*'],
+        src: ['auth/auth.module.js', 'auth/*.*'],
         dest: 'aws-auth-angular.js',
       },
     },
   });
 
   grunt.registerTask('build', [
-    'bower_concat',
     'concat'
     ]);
 };

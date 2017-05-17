@@ -1,10 +1,7 @@
 {
   "name": "aws-auth-angular",
   "description": "",
-  "main": [
-    "auth0-variables.js",
-    "aws-auth-angular.js"
-  ],
+  "main": "aws-auth-angular.js",
   "authors": [
     "muenzer"
   ],
@@ -18,6 +15,8 @@
     "tests"
   ],
   "dependencies": {
+    "angular": "^1.6.4",
+    "angular-ui-router": "^1.0.3",
     "angular-auth0": "^1.0.6",
     "angular-jwt": "^0.1.9",
     "auth0-lock": "^10.11.0",
@@ -25,8 +24,6 @@
     "angular-aws-apig": "^1.2.3"
   },
   "devDependencies": {
-    "angular": "^1.6.4",
-    "angular-mocks": "^1.6.4",
-    "angular-ui-router": "^1.0.3"
+    "angular-mocks": "^1.6.4"
   }
 }
