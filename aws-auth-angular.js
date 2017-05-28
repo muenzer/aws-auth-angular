@@ -11,7 +11,8 @@
   angular.module('aws-auth-angular')
   .config(authConfig)
   .config(awsConfig)
-  .run(authServiceConfig);
+  .run(authServiceConfig)
+  .run(stateChange);
 
   authConfig.$inject = ['lockProvider', 'angularAuth0Provider', 'awsAuthAngularInfo'];
   function authConfig(lockProvider, angularAuth0Provider, awsAuthAngularInfo) {
@@ -32,6 +33,13 @@
     angularAuth0Provider.init({
       clientID: awsAuthAngularInfo.AUTH0_CLIENT_ID,
       domain: awsAuthAngularInfo.AUTH0_DOMAIN
+    });
+  }
+
+  stateChange.$inject = ['$rootScope', '$state'];
+  function stateChange($rootScope, $state) {
+    $rootScope.$on('$stateChangeStart', function(e, to, params) {
+      localStorage.setItem('redirect_url', $state.href(to.name, params));
     });
   }
 
@@ -77,21 +85,21 @@
   //
   // }
 
-authServiceConfig.$inject = ['$rootScope', 'authService', 'lock'];
-function authServiceConfig($rootScope, authService, lock) {
-  // Put the authService on $rootScope so its methods
-  // can be accessed from the nav bar
-  $rootScope.authService = authService;
+  authServiceConfig.$inject = ['$rootScope', 'authService', 'lock'];
+  function authServiceConfig($rootScope, authService, lock) {
+    // Put the authService on $rootScope so its methods
+    // can be accessed from the nav bar
+    $rootScope.authService = authService;
 
-  // Register the authentication listener that is
-  // set up in auth.service.js
-  authService.registerAuthenticationListener();
+    // Register the authentication listener that is
+    // set up in auth.service.js
+    authService.registerAuthenticationListener();
 
-  // Register the synchronous hash parser
-  lock.interceptHash();
+    // Register the synchronous hash parser
+    lock.interceptHash();
 
-  //localStorage.removeItem('AWS.config.credentials');
-}
+    //localStorage.removeItem('AWS.config.credentials');
+  }
 
 }());
 
