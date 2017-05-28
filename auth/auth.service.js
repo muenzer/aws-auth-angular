@@ -5,8 +5,8 @@
   .module('aws-auth-angular')
   .service('authService', authService);
 
-  authService.$inject = ['lock', 'authManager', 'angularAuth0', 'jwtHelper', '$q', 'awsAuthAngularInfo', '$rootScope', '$state'];
-  function authService(lock, authManager, angularAuth0, jwtHelper, $q, awsAuthAngularInfo, $rootScope, $state) {
+  authService.$inject = ['lock', 'authManager', 'angularAuth0', 'jwtHelper', '$q', 'awsAuthAngularInfo', '$rootScope', '$state', '$location'];
+  function authService(lock, authManager, angularAuth0, jwtHelper, $q, awsAuthAngularInfo, $rootScope, $state, $location) {
 
     function login() {
       lock.show();
@@ -53,6 +53,10 @@
           if (!error) {
             localStorage.setItem('profile', JSON.stringify(profile));
             $rootScope.name = profile.name;
+            var url = localStorage.getItem('redirect_url').replace('#!','');
+            if(url) {
+              $location.path(url);
+            }
           } else {
             console.log(error);
           }
