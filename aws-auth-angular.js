@@ -1,7 +1,15 @@
 (function() {
   'use strict';
 
-  angular.module('aws-auth-angular', ['auth0.lock', 'angular-jwt', 'auth0.auth0', 'angular-aws-apig', 'ui.router', 'aws-auth-angular-config']);
+  angular.module('aws-auth-angular',
+  [
+    'auth0.lock',
+    'angular-jwt',
+    'auth0.auth0',
+    'angular-aws-apig',
+    'ui.router',
+    'aws-auth-angular-config'
+  ]);
 
 }());
 
@@ -62,7 +70,6 @@
         };
         return aws;
       }).catch(function () {
-        //authService.login();
       });
     }
 
@@ -70,20 +77,6 @@
 
     $httpProvider.interceptors.push('APIGInterceptor');
   }
-
-  // stateChange.$inject = ['$rootScope', '$state', 'authService'];
-  // function stateChange($rootScope, $state, authService) {
-  //   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-  //     if (toState.name !== 'login' && toState.name.includes('admin')){
-  //       authService.getToken().catch(function () {
-  //         // User isn’t authenticated
-  //         $state.transitionTo('login');
-  //         event.preventDefault();
-  //       });
-  //     }
-  //   });
-  //
-  // }
 
   authServiceConfig.$inject = ['$rootScope', 'authService', 'lock'];
   function authServiceConfig($rootScope, authService, lock) {
@@ -98,7 +91,6 @@
     // Register the synchronous hash parser
     lock.interceptHash();
 
-    //localStorage.removeItem('AWS.config.credentials');
   }
 
 }());
@@ -146,9 +138,6 @@
     // Set up the logic for when a user authenticates
     // This method is called from app.run.js
     function registerAuthenticationListener() {
-      // lock.on('show', function () {
-      //   localStorage.removeItem('AWS.config.credentials');
-      // });
 
       lock.on('authenticated', function (authResult) {
         localStorage.setItem('id_token', authResult.idToken);
@@ -177,7 +166,6 @@
       } else {
         var d = $q.defer();
         getToken().then(function (idToken) {
-          /* jshint -W106 */
           angularAuth0.getDelegationToken(
             {
               client_id: awsAuthAngularInfo.AUTH0_CLIENT_ID,
@@ -188,7 +176,6 @@
               localStorage.setItem('AWS.config.credentials', JSON.stringify(awsCreds));
               d.resolve(result.Credentials);
             });
-            /* jshint +W106 */
           });
           return d.promise;
         }
@@ -196,7 +183,7 @@
 
       function getProfile() {
         var token = getToken();
-        lock.getProfile(authResult.idToken, function(error, profile) {
+        lock.getProfile(token, function(error, profile) {
           if (error) {
             console.log(error);
           }
