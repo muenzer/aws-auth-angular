@@ -41,9 +41,6 @@
     // Set up the logic for when a user authenticates
     // This method is called from app.run.js
     function registerAuthenticationListener() {
-      // lock.on('show', function () {
-      //   localStorage.removeItem('AWS.config.credentials');
-      // });
 
       lock.on('authenticated', function (authResult) {
         localStorage.setItem('id_token', authResult.idToken);
@@ -72,7 +69,6 @@
       } else {
         var d = $q.defer();
         getToken().then(function (idToken) {
-          /* jshint -W106 */
           angularAuth0.getDelegationToken(
             {
               client_id: awsAuthAngularInfo.AUTH0_CLIENT_ID,
@@ -83,7 +79,6 @@
               localStorage.setItem('AWS.config.credentials', JSON.stringify(awsCreds));
               d.resolve(result.Credentials);
             });
-            /* jshint +W106 */
           });
           return d.promise;
         }
@@ -91,7 +86,7 @@
 
       function getProfile() {
         var token = getToken();
-        lock.getProfile(authResult.idToken, function(error, profile) {
+        lock.getProfile(token, function(error, profile) {
           if (error) {
             console.log(error);
           }

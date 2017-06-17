@@ -55,7 +55,6 @@
         };
         return aws;
       }).catch(function () {
-        //authService.login();
       });
     }
 
@@ -63,20 +62,6 @@
 
     $httpProvider.interceptors.push('APIGInterceptor');
   }
-
-  // stateChange.$inject = ['$rootScope', '$state', 'authService'];
-  // function stateChange($rootScope, $state, authService) {
-  //   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-  //     if (toState.name !== 'login' && toState.name.includes('admin')){
-  //       authService.getToken().catch(function () {
-  //         // User isn’t authenticated
-  //         $state.transitionTo('login');
-  //         event.preventDefault();
-  //       });
-  //     }
-  //   });
-  //
-  // }
 
   authServiceConfig.$inject = ['$rootScope', 'authService', 'lock'];
   function authServiceConfig($rootScope, authService, lock) {
@@ -91,7 +76,6 @@
     // Register the synchronous hash parser
     lock.interceptHash();
 
-    //localStorage.removeItem('AWS.config.credentials');
   }
 
 }());
