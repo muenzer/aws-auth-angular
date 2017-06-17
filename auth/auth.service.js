@@ -85,12 +85,15 @@
       }
 
       function getProfile() {
-        var token = getToken();
-        lock.getProfile(token, function(error, profile) {
-          if (error) {
-            console.log(error);
-          }
-          return(profile);
+        getToken().
+        then(function (token) {
+          lock.getProfile(token, function(error, profile) {
+            if (error) {
+              console.log(error);
+              throw(error);
+            }
+            return(profile);
+          });
         });
       }
 
